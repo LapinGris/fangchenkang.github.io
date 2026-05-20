@@ -1,0 +1,79 @@
+body:has(.index-card) #banner {
+  min-height: 100vh;
+  background-position: center center !important;
+}
+
+body:has(.index-card) #banner .full-bg-img,
+body:has(.index-card) #banner .mask {
+  min-height: 100vh;
+}
+
+body:has(.index-card) #banner .mask {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(16, 24, 40, 0.1) 0%,
+      rgba(16, 24, 40, 0.18) 38%,
+      rgba(16, 24, 40, 0.58) 100%
+    ) !important;
+}
+
+body:has(.index-card) .banner-text {
+  width: min(92%, 980px);
+  max-width: none;
+  transform: translateY(12px);
+}
+
+body:has(.index-card) #subtitle,
+body:has(.index-card) .typed-cursor {
+  color: #fff;
+  font-size: clamp(1.9rem, 4vw, 3.35rem);
+  line-height: 1.45;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.38);
+}
+
+body:has(.index-card) .typed-cursor {
+  margin-left: 0.12em;
+  opacity: 0.9;
+}
+
+body:has(.index-card) .scroll-down-bar {
+  bottom: 28px;
+  color: rgba(255, 255, 255, 0.78);
+  animation: home-scroll-cue 1.8s ease-in-out infinite;
+}
+
+body:has(.index-card) #board {
+  margin-top: 0 !important;
+  border-radius: 0;
+}
+
+body:has(.index-card) .index-card:first-of-type {
+  margin-top: 2.2rem !important;
+}
+
+@keyframes home-scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.62;
+  }
+
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  body:has(.index-card) .banner-text {
+    width: min(90%, 680px);
+  }
+
+  body:has(.index-card) #subtitle,
+  body:has(.index-card) .typed-cursor {
+    font-size: clamp(1.55rem, 8vw, 2.35rem);
+  }
+}
