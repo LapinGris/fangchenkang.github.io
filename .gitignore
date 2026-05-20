@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+db.json
+*.log
+*.err
+node_modules/
+public/
+.deploy*/
+.deploy_git/
+.hexo/
+.cache/
+_multiconfig.yml

@@ -1,0 +1,3 @@
+# Overrides used by the GitHub Pages workflow for this project repository.
+# If you later use a custom domain or deploy with Vercel, keep _config.yml root as /.
+root: /shenxingxi.github.io/

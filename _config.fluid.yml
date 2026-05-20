@@ -1,0 +1,181 @@
+# Hexo Theme Fluid configuration
+# Docs: https://hexo.fluid-dev.com/docs/
+
+favicon: /img/fluid.png
+apple_touch_icon: /img/fluid.png
+tab_title_separator: " - "
+force_https: false
+
+dark_mode:
+  enable: true
+  default: auto
+
+color:
+  body_bg_color: "#f4f5f7"
+  body_bg_color_dark: "#181c27"
+  navbar_bg_color: "#2f4154"
+  navbar_bg_color_dark: "#1f3144"
+  navbar_text_color: "#ffffff"
+  navbar_text_color_dark: "#d0d0d0"
+  subtitle_color: "#ffffff"
+  subtitle_color_dark: "#d0d0d0"
+  text_color: "#344054"
+  text_color_dark: "#c4c6c9"
+  sec_text_color: "#667085"
+  sec_text_color_dark: "#a7a9ad"
+  board_color: "#ffffff"
+  board_color_dark: "#252d38"
+  post_text_color: "#2c3e50"
+  post_text_color_dark: "#c4c6c9"
+  post_heading_color: "#1d2939"
+  post_heading_color_dark: "#c4c6c9"
+  post_link_color: "#1d4ed8"
+  post_link_color_dark: "#7aa2ff"
+  link_hover_color: "#0f766e"
+  link_hover_color_dark: "#5eead4"
+  link_hover_bg_color: "#f8fafc"
+  link_hover_bg_color_dark: "#364151"
+
+font:
+  font_size: 16px
+  font_family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Serif SC", "Noto Sans SC", "Microsoft YaHei", sans-serif
+  letter_spacing: 0
+  code_font_size: 85%
+
+fun_features:
+  typing:
+    enable: false
+  anchorjs:
+    enable: true
+  progressbar:
+    enable: true
+    height_px: 2
+    color: "#2f4154"
+
+navbar:
+  blog_title: "Xingxi's Space"
+  ground_glass:
+    enable: false
+  menu:
+    - { key: "home", name: "首页", link: "/", icon: "iconfont icon-home-fill" }
+    - { key: "archive", name: "归档", link: "/archives/", icon: "iconfont icon-archive-fill" }
+    - { key: "category", name: "分类", link: "/categories/", icon: "iconfont icon-category-fill" }
+    - { key: "tag", name: "标签", link: "/tags/", icon: "iconfont icon-tags-fill" }
+    - { key: "projects", name: "研究项目", link: "/projects/", icon: "iconfont icon-folder-fill" }
+    - { key: "publications", name: "论文写作", link: "/publications/", icon: "iconfont icon-pen" }
+    - { key: "about", name: "关于", link: "/about/", icon: "iconfont icon-user-fill" }
+
+search:
+  enable: false
+
+banner:
+  random_img: false
+  parallax: true
+  width_height_ratio: 1.0
+
+scroll_down_arrow:
+  enable: true
+
+scroll_top_arrow:
+  enable: true
+
+open_graph:
+  enable: true
+  twitter_card: summary_large_image
+
+footer:
+  content: '© 2026 Xingxi Shen. Powered by <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>.'
+  statistics:
+    enable: false
+  beian:
+    enable: false
+
+index:
+  banner_img: /img/default.png
+  banner_img_height: 70
+  banner_mask_alpha: 0.35
+  slogan:
+    enable: true
+    text: "学术笔记与生活记录"
+  auto_excerpt:
+    enable: true
+  post_url_target: _self
+  post_meta:
+    date: true
+    category: true
+    tag: true
+
+post:
+  banner_img: /img/default.png
+  banner_img_height: 60
+  banner_mask_alpha: 0.35
+  default_index_img:
+  meta:
+    author:
+      enable: false
+    date:
+      enable: true
+      format: "LL"
+    wordcount:
+      enable: false
+    min2read:
+      enable: false
+    views:
+      enable: false
+  updated:
+    enable: false
+  toc:
+    enable: true
+    headingSelector: "h1,h2,h3,h4,h5,h6"
+    collapseDepth: 0
+  copyright:
+    enable: false
+  comments:
+    enable: false
+
+archive:
+  banner_img: /img/default.png
+  banner_img_height: 45
+  banner_mask_alpha: 0.35
+
+category:
+  enable: true
+  banner_img: /img/default.png
+  banner_img_height: 45
+  banner_mask_alpha: 0.35
+
+tag:
+  enable: true
+  banner_img: /img/default.png
+  banner_img_height: 45
+  banner_mask_alpha: 0.35
+
+about:
+  enable: true
+  banner_img: /img/default.png
+  banner_img_height: 45
+  banner_mask_alpha: 0.35
+  avatar: /img/avatar.png
+  name: "Xingxi Shen"
+  intro: "公共治理、政治学与城市研究"
+  icons:
+    - { class: "iconfont icon-github-fill", link: "https://github.com/LapinGris", tip: "GitHub" }
+    - { class: "iconfont icon-mail", link: "mailto:kangfangchen@sjtu.edu.cn", tip: "Email" }
+
+page:
+  banner_img: /img/default.png
+  banner_img_height: 45
+  banner_mask_alpha: 0.35
+
+page404:
+  enable: true
+  banner_img: /img/default.png
+  banner_img_height: 60
+  banner_mask_alpha: 0.35
+  redirect_delay: 5000
+
+links:
+  enable: false
+
+web_analytics:
+  enable: false
