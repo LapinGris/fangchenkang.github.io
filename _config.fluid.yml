@@ -106,7 +106,7 @@ index:
   banner_mask_alpha: 0.28
   slogan:
     enable: true
-    text: "在研究、阅读与写作之间，留下可以继续生长的材料。"
+    text: "越写越清醒，越走越坚定，越活越好。"
   auto_excerpt:
     enable: true
   post_url_target: _self

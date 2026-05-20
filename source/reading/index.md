@@ -12,16 +12,18 @@ layout: page
 <section class="library-section">
 <h2>阅读分类</h2>
 <div class="library-tabs" aria-label="阅读分类">
-<span>书籍</span>
-<span>论文</span>
-<span>文献综述</span>
-<span>概念笔记</span>
+<button class="filter-pill active" type="button" data-filter="all">全部</button>
+<button class="filter-pill" type="button" data-filter="书籍">书籍</button>
+<button class="filter-pill" type="button" data-filter="论文">论文</button>
+<button class="filter-pill" type="button" data-filter="文献综述">文献综述</button>
+<button class="filter-pill" type="button" data-filter="概念笔记">概念笔记</button>
 </div>
 </section>
 <section class="library-section">
 <h2>阅读书架</h2>
-<div class="library-card-grid reading-grid">
-<article class="library-card reading-card">
+<div class="library-card-grid reading-grid" data-library-filter="reading">
+<!-- READING_CARDS_START -->
+<article class="library-card reading-card" data-category="书籍" data-tags="社会结构 基层社会 经典阅读" data-slug="xiangtu-china">
 <a class="book-cover" href="/reading/xiangtu-china/"><img src="/img/covers/default-book-cover.svg" alt="乡土中国"></a>
 <div class="card-body">
 <p class="card-type">书籍</p>
@@ -31,7 +33,7 @@ layout: page
 <div class="tag-list"><span>社会结构</span><span>基层社会</span><span>经典阅读</span></div>
 </div>
 </article>
-<article class="library-card reading-card">
+<article class="library-card reading-card" data-category="书籍" data-tags="国家能力 治理理性 地方知识" data-slug="seeing-like-a-state">
 <a class="book-cover" href="/reading/seeing-like-a-state/"><img src="/img/covers/default-book-cover.svg" alt="国家的视角"></a>
 <div class="card-body">
 <p class="card-type">书籍</p>
@@ -41,7 +43,7 @@ layout: page
 <div class="tag-list"><span>国家能力</span><span>治理理性</span><span>地方知识</span></div>
 </div>
 </article>
-<article class="library-card reading-card">
+<article class="library-card reading-card" data-category="书籍" data-tags="民族主义 政治理论 共同体" data-slug="imagined-communities">
 <a class="book-cover" href="/reading/imagined-communities/"><img src="/img/covers/default-book-cover.svg" alt="想象的共同体"></a>
 <div class="card-body">
 <p class="card-type">书籍</p>
@@ -51,7 +53,7 @@ layout: page
 <div class="tag-list"><span>民族主义</span><span>政治理论</span><span>共同体</span></div>
 </div>
 </article>
-<article class="library-card reading-card">
+<article class="library-card reading-card" data-category="论文" data-tags="公共治理 论文笔记 研究设计" data-slug="public-governance-paper">
 <a class="book-cover" href="/reading/public-governance-paper/"><img src="/img/covers/default-book-cover.svg" alt="公共治理相关论文阅读笔记"></a>
 <div class="card-body">
 <p class="card-type">论文</p>
@@ -61,7 +63,7 @@ layout: page
 <div class="tag-list"><span>公共治理</span><span>论文笔记</span><span>研究设计</span></div>
 </div>
 </article>
-<article class="library-card reading-card">
+<article class="library-card reading-card" data-category="论文" data-tags="计算政治学 文本分析 方法论文" data-slug="computational-politics-paper">
 <a class="book-cover" href="/reading/computational-politics-paper/"><img src="/img/covers/default-book-cover.svg" alt="计算政治学相关论文阅读笔记"></a>
 <div class="card-body">
 <p class="card-type">论文</p>
@@ -71,6 +73,9 @@ layout: page
 <div class="tag-list"><span>计算政治学</span><span>文本分析</span><span>方法论文</span></div>
 </div>
 </article>
+<!-- READING_CARDS_END -->
 </div>
+<p class="library-empty" hidden>这个分类下暂时还没有条目。</p>
 </section>
+<script src="/js/library-filter.js" defer></script>
 </div>

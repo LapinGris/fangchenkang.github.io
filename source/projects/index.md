@@ -12,16 +12,18 @@ layout: page
 <section class="library-section">
 <h2>项目分类</h2>
 <div class="library-tabs" aria-label="项目分类">
-<span>研究项目</span>
-<span>方法学习</span>
-<span>数据与工具</span>
-<span>写作计划</span>
+<button class="filter-pill active" type="button" data-filter="all">全部</button>
+<button class="filter-pill" type="button" data-filter="研究项目">研究项目</button>
+<button class="filter-pill" type="button" data-filter="方法学习">方法学习</button>
+<button class="filter-pill" type="button" data-filter="数据与工具">数据与工具</button>
+<button class="filter-pill" type="button" data-filter="写作计划">写作计划</button>
 </div>
 </section>
 <section class="library-section">
 <h2>项目列表</h2>
-<div class="library-card-grid project-grid">
-<article class="library-card project-card">
+<div class="library-card-grid project-grid" data-library-filter="projects">
+<!-- PROJECT_CARDS_START -->
+<article class="library-card project-card" data-category="研究项目" data-tags="基层治理 公共安全 政策文本" data-slug="zongzhi">
 <a class="project-cover" href="/projects/zongzhi/"><img src="/img/projects/default-project.svg" alt="社会治安综合治理研究"></a>
 <div class="card-body">
 <p class="card-type">研究项目</p>
@@ -31,7 +33,7 @@ layout: page
 <a class="card-action" href="/projects/zongzhi/">进入项目</a>
 </div>
 </article>
-<article class="library-card project-card">
+<article class="library-card project-card" data-category="研究项目" data-tags="政策扩散 低空经济 地方政府" data-slug="low-altitude-economy">
 <a class="project-cover" href="/projects/low-altitude-economy/"><img src="/img/projects/default-project.svg" alt="低空经济政策扩散研究"></a>
 <div class="card-body">
 <p class="card-type">研究项目</p>
@@ -41,7 +43,7 @@ layout: page
 <a class="card-action" href="/projects/low-altitude-economy/">进入项目</a>
 </div>
 </article>
-<article class="library-card project-card">
+<article class="library-card project-card" data-category="研究项目" data-tags="城市政治 空间生产 地方发展" data-slug="urban-governance">
 <a class="project-cover" href="/projects/urban-governance/"><img src="/img/projects/default-project.svg" alt="城市治理与空间生产研究"></a>
 <div class="card-body">
 <p class="card-type">研究项目</p>
@@ -51,7 +53,7 @@ layout: page
 <a class="card-action" href="/projects/urban-governance/">进入项目</a>
 </div>
 </article>
-<article class="library-card project-card">
+<article class="library-card project-card" data-category="研究项目" data-tags="人工智能 公共安全 风险治理" data-slug="ai-public-security">
 <a class="project-cover" href="/projects/ai-public-security/"><img src="/img/projects/default-project.svg" alt="人工智能与公共安全治理研究"></a>
 <div class="card-body">
 <p class="card-type">研究项目</p>
@@ -61,7 +63,7 @@ layout: page
 <a class="card-action" href="/projects/ai-public-security/">进入项目</a>
 </div>
 </article>
-<article class="library-card project-card">
+<article class="library-card project-card" data-category="方法学习" data-tags="定量方法 因果推断 数据分析" data-slug="quantitative-methods">
 <a class="project-cover" href="/projects/quantitative-methods/"><img src="/img/projects/default-project.svg" alt="定量研究方法学习"></a>
 <div class="card-body">
 <p class="card-type">方法学习</p>
@@ -71,7 +73,7 @@ layout: page
 <a class="card-action" href="/projects/quantitative-methods/">进入项目</a>
 </div>
 </article>
-<article class="library-card project-card">
+<article class="library-card project-card" data-category="方法学习" data-tags="计算政治学 文本分析 NLP" data-slug="computational-politics">
 <a class="project-cover" href="/projects/computational-politics/"><img src="/img/projects/default-project.svg" alt="计算政治学与文本分析学习"></a>
 <div class="card-body">
 <p class="card-type">方法学习</p>
@@ -81,6 +83,9 @@ layout: page
 <a class="card-action" href="/projects/computational-politics/">进入项目</a>
 </div>
 </article>
+<!-- PROJECT_CARDS_END -->
 </div>
+<p class="library-empty" hidden>这个分类下暂时还没有条目。</p>
 </section>
+<script src="/js/library-filter.js" defer></script>
 </div>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <title>Xingxi's Space 写作后台</title>
+  <title>Fangchen's Space 内容后台</title>
   <style>
     :root {
       --bg: #f4f6f8;
@@ -33,6 +33,7 @@
 
     button,
     input,
+    select,
     textarea {
       font: inherit;
     }
@@ -75,11 +76,17 @@
       font-size: 13px;
     }
 
-    .header-actions {
+    .header-actions,
+    .button-row,
+    .tabs,
+    .tools {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
+    }
+
+    .header-actions {
       justify-content: flex-end;
     }
 
@@ -112,6 +119,7 @@
       background: #fff;
       border-color: var(--line);
       color: var(--text);
+      font-weight: 700;
     }
 
     .primary-button {
@@ -132,10 +140,27 @@
       border-color: #f3b8b2;
     }
 
+    .type-button,
+    .tab-button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      border-radius: 8px;
+      min-height: 36px;
+      padding: 0 12px;
+    }
+
+    .type-button.active,
+    .tab-button.active {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+
     main {
       padding: 24px clamp(16px, 3vw, 36px) 36px;
       display: grid;
-      grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+      grid-template-columns: minmax(270px, 360px) minmax(0, 1fr);
       gap: 20px;
       align-items: start;
     }
@@ -174,6 +199,12 @@
       margin-bottom: 12px;
     }
 
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
     label {
       color: var(--muted);
       font-size: 13px;
@@ -181,6 +212,7 @@
     }
 
     input,
+    select,
     textarea {
       width: 100%;
       border: 1px solid var(--line);
@@ -192,6 +224,7 @@
     }
 
     input:focus,
+    select:focus,
     textarea:focus {
       border-color: #8bb3ff;
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.13);
@@ -199,8 +232,10 @@
 
     textarea {
       resize: vertical;
-      min-height: 430px;
+      min-height: 520px;
       line-height: 1.72;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 14px;
     }
 
     .muted {
@@ -220,27 +255,10 @@
       flex-wrap: wrap;
     }
 
-    .tabs,
-    .tools {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .tab-button {
-      border: 1px solid var(--line);
+    .editor-meta {
+      padding: 18px 18px 4px;
+      border-bottom: 1px solid var(--line);
       background: #fff;
-      color: var(--muted);
-      border-radius: 8px;
-      min-height: 34px;
-      padding: 0 12px;
-    }
-
-    .tab-button.active {
-      background: var(--brand);
-      border-color: var(--brand);
-      color: #fff;
     }
 
     .editor-area {
@@ -256,6 +274,7 @@
       display: none;
       min-height: 540px;
       line-height: 1.85;
+      background: #fff;
     }
 
     .preview-panel.active,
@@ -272,6 +291,11 @@
     .preview-panel h3 {
       color: #1d2939;
       line-height: 1.4;
+    }
+
+    .preview-panel img {
+      max-width: 100%;
+      border-radius: 8px;
     }
 
     .preview-panel blockquote {
@@ -295,14 +319,14 @@
       overflow: auto;
     }
 
-    .post-list {
+    .content-list {
       display: grid;
       gap: 8px;
-      max-height: 260px;
+      max-height: 320px;
       overflow: auto;
     }
 
-    .post-item {
+    .content-item {
       text-align: left;
       border: 1px solid var(--line);
       background: #fff;
@@ -311,7 +335,7 @@
       color: var(--text);
     }
 
-    .post-item small {
+    .content-item small {
       display: block;
       color: var(--muted);
       margin-top: 4px;
@@ -351,7 +375,7 @@
     }
 
     .modal-body {
-      width: min(560px, 100%);
+      width: min(620px, 100%);
       background: #fff;
       border-radius: 8px;
       border: 1px solid var(--line);
@@ -372,7 +396,11 @@
       flex-wrap: wrap;
     }
 
-    @media (max-width: 980px) {
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 1040px) {
       main {
         grid-template-columns: 1fr;
       }
@@ -382,7 +410,7 @@
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 700px) {
       header {
         align-items: flex-start;
         flex-direction: column;
@@ -392,8 +420,12 @@
         justify-content: flex-start;
       }
 
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+
       textarea {
-        min-height: 360px;
+        min-height: 380px;
       }
     }
   </style>
@@ -402,8 +434,8 @@
   <div class="shell">
     <header>
       <div class="brand">
-        <strong>Xingxi's Space 写作后台</strong>
-        <span>Markdown 写作，发布到 GitHub 后自动更新博客</span>
+        <strong>Fangchen's Space 内容后台</strong>
+        <span>写博客、管理研究项目和阅读笔记，发布到 GitHub 后自动更新网站</span>
       </div>
       <div class="header-actions">
         <a class="ghost-link" href="../" target="_blank" rel="noopener">打开博客</a>
@@ -414,38 +446,48 @@
     <main>
       <aside>
         <section>
-          <p class="section-title">文章信息</p>
-          <div class="field">
-            <label for="title">标题</label>
-            <input id="title" placeholder="例如：一份读书笔记">
+          <p class="section-title">内容类型</p>
+          <div class="tabs" id="typeTabs">
+            <button class="type-button active" type="button" data-mode="post">博客文章</button>
+            <button class="type-button" type="button" data-mode="project">研究项目</button>
+            <button class="type-button" type="button" data-mode="reading">阅读笔记</button>
           </div>
-          <div class="field">
-            <label for="slug">文件名</label>
-            <input id="slug" placeholder="自动生成，可手动修改">
-            <div class="muted">发布到 <code>source/_posts/文件名.md</code></div>
+        </section>
+
+        <section>
+          <p class="section-title">内容操作</p>
+          <div class="button-row">
+            <button class="plain-button" type="button" id="newButton">新建</button>
+            <button class="plain-button" type="button" id="templateButton">套用模板</button>
+            <button class="plain-button" type="button" id="loadListButton">读取列表</button>
           </div>
+          <p class="muted" id="pathHint">发布到 source/_posts/文件名.md</p>
+        </section>
+
+        <section>
+          <p class="section-title">图片上传</p>
           <div class="field">
-            <label for="category">分类</label>
-            <input id="category" value="随笔">
+            <label for="imageFile">选择图片</label>
+            <input id="imageFile" type="file" accept="image/*">
           </div>
-          <div class="field">
-            <label for="tags">标签</label>
-            <input id="tags" placeholder="用逗号分隔，例如：读书, 写作">
+          <div class="button-row">
+            <button class="plain-button" type="button" id="uploadImageButton">上传图片</button>
+            <button class="plain-button" type="button" id="insertImageButton">插入正文</button>
           </div>
+          <p class="muted" id="imageHint">博客图片会上传到 source/img/posts/</p>
         </section>
 
         <section>
           <p class="section-title">发布</p>
-          <button class="primary-button" type="button" id="publishButton">发布到 GitHub</button>
+          <button class="primary-button" type="button" id="publishButton">保存并发布到 GitHub</button>
           <button class="plain-button" type="button" id="saveDraftButton">保存草稿</button>
           <button class="danger-button" type="button" id="clearDraftButton">清空草稿</button>
-          <p class="muted">发布会创建一次 Git 提交，GitHub Actions 随后自动部署。</p>
+          <p class="muted">保存会创建一次 Git 提交。项目和阅读笔记会同步更新入口页卡片。</p>
         </section>
 
         <section>
-          <p class="section-title">已有文章</p>
-          <button class="plain-button" type="button" id="loadPostsButton">读取文章列表</button>
-          <div class="post-list" id="postList"></div>
+          <p class="section-title">已有内容</p>
+          <div class="content-list" id="contentList"></div>
         </section>
       </aside>
 
@@ -464,9 +506,55 @@
           </div>
         </div>
 
+        <div class="editor-meta">
+          <div class="field-grid">
+            <div class="field">
+              <label for="title">标题</label>
+              <input id="title" placeholder="例如：一份读书笔记">
+            </div>
+            <div class="field">
+              <label for="slug">文件名 / 路径名</label>
+              <input id="slug" placeholder="自动生成，可手动修改">
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label for="category" id="categoryLabel">分类</label>
+              <input id="category" list="categoryOptions" value="随笔">
+              <datalist id="categoryOptions"></datalist>
+            </div>
+            <div class="field" id="authorField">
+              <label for="author">作者 / 文献信息</label>
+              <input id="author" placeholder="阅读笔记可填写作者">
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label for="summary">简短说明</label>
+              <input id="summary" placeholder="用于项目或阅读入口页卡片">
+            </div>
+            <div class="field">
+              <label for="cover">封面 / 图片路径</label>
+              <input id="cover" placeholder="/img/covers/default-book-cover.svg">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="tags">标签</label>
+            <input id="tags" placeholder="用逗号分隔，例如：公共治理, 文本分析">
+          </div>
+
+          <label class="muted">
+            <input id="syncCard" type="checkbox" checked>
+            保存项目或阅读笔记时，同步更新入口页卡片
+          </label>
+        </div>
+
         <div class="editor-area">
           <div class="editor-panel active" id="editorPanel">
-            <textarea id="content" placeholder="在这里写正文。支持 Markdown。"></textarea>
+            <textarea id="content" placeholder="在这里写正文。博客支持 Markdown；项目和阅读页也可以直接编辑现有 HTML 模板。"></textarea>
           </div>
           <article class="preview-panel" id="previewPanel"></article>
         </div>
@@ -478,13 +566,15 @@
   <div class="modal" id="settingsModal" aria-hidden="true">
     <div class="modal-body">
       <h2>仓库设置</h2>
-      <div class="field">
-        <label for="owner">Owner</label>
-        <input id="owner" value="FangchenKang">
-      </div>
-      <div class="field">
-        <label for="repo">Repository</label>
-        <input id="repo" value="fangchenkang.github.io">
+      <div class="field-grid">
+        <div class="field">
+          <label for="owner">Owner</label>
+          <input id="owner" value="FangchenKang">
+        </div>
+        <div class="field">
+          <label for="repo">Repository</label>
+          <input id="repo" value="fangchenkang.github.io">
+        </div>
       </div>
       <div class="field">
         <label for="branch">Branch</label>
@@ -492,7 +582,7 @@
       </div>
       <div class="field">
         <label for="token">GitHub token</label>
-        <input id="token" type="password" autocomplete="off" placeholder="Fine-grained token，权限为 Contents: Read and write">
+        <input id="token" type="password" autocomplete="off" placeholder="Fine-grained token，Contents: Read and write">
         <div class="muted">token 只保存在当前浏览器的 localStorage 中。不要在公共电脑上保存。</div>
       </div>
       <div class="modal-actions">
@@ -503,11 +593,54 @@
   </div>
 
   <script>
-    const storageKey = "xingxi_writer_settings";
-    const draftKey = "xingxi_writer_draft";
+    const storageKey = "fangchen_content_admin_settings";
+    const draftKey = "fangchen_content_admin_draft";
+
+    const modeConfig = {
+      post: {
+        label: "博客文章",
+        listPath: "source/_posts",
+        imageDir: "source/img/posts",
+        imagePublic: "/img/posts",
+        pathHint: "发布到 source/_posts/文件名.md",
+        imageHint: "博客图片会上传到 source/img/posts/",
+        categoryLabel: "分类",
+        defaultCategory: "随笔",
+        categories: ["随笔", "研究札记", "读书笔记", "生活记录"]
+      },
+      project: {
+        label: "研究项目",
+        listPath: "source/projects",
+        imageDir: "source/img/projects",
+        imagePublic: "/img/projects",
+        pathHint: "发布到 source/projects/路径名/index.md",
+        imageHint: "项目图片会上传到 source/img/projects/",
+        categoryLabel: "项目类型",
+        defaultCategory: "研究项目",
+        defaultCover: "/img/projects/default-project.svg",
+        indexPath: "source/projects/index.md",
+        categories: ["研究项目", "方法学习", "数据与工具", "写作计划"]
+      },
+      reading: {
+        label: "阅读笔记",
+        listPath: "source/reading",
+        imageDir: "source/img/covers",
+        imagePublic: "/img/covers",
+        pathHint: "发布到 source/reading/路径名/index.md",
+        imageHint: "阅读封面会上传到 source/img/covers/",
+        categoryLabel: "阅读类型",
+        defaultCategory: "书籍",
+        defaultCover: "/img/covers/default-book-cover.svg",
+        indexPath: "source/reading/index.md",
+        categories: ["书籍", "论文", "文献综述", "概念笔记"]
+      }
+    };
+
     const state = {
+      mode: "post",
       editingPath: "",
       editingSha: "",
+      lastImagePath: "",
       settings: {
         owner: "FangchenKang",
         repo: "fangchenkang.github.io",
@@ -521,14 +654,135 @@
       title: $("title"),
       slug: $("slug"),
       category: $("category"),
+      author: $("author"),
+      summary: $("summary"),
+      cover: $("cover"),
       tags: $("tags"),
       content: $("content"),
-      status: $("status")
+      status: $("status"),
+      syncCard: $("syncCard")
     };
 
     function setStatus(message, type) {
       fields.status.textContent = message;
       fields.status.className = "status" + (type ? " " + type : "");
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function escapeYaml(value) {
+      return String(value || "").replace(/"/g, '\\"');
+    }
+
+    function escapeRegExp(value) {
+      return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function slugify(value) {
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFKD")
+        .replace(/[^\w\u4e00-\u9fa5]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        || "untitled";
+    }
+
+    function safeFileName(name) {
+      const dot = name.lastIndexOf(".");
+      const base = dot >= 0 ? name.slice(0, dot) : name;
+      const ext = dot >= 0 ? name.slice(dot).toLowerCase().replace(/[^.\w]/g, "") : "";
+      const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+      return `${stamp}-${slugify(base)}${ext || ".png"}`;
+    }
+
+    function splitList(value) {
+      return String(value || "")
+        .split(/[,，]/)
+        .map((item) => item.trim())
+        .filter(Boolean);
+    }
+
+    function nowString() {
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2, "0");
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    }
+
+    function encodeBase64Utf8(value) {
+      const bytes = new TextEncoder().encode(value);
+      let binary = "";
+      const chunk = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunk) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
+      }
+      return btoa(binary);
+    }
+
+    function decodeBase64Utf8(value) {
+      const binary = atob(value.replace(/\n/g, ""));
+      const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+
+    function apiUrl(path) {
+      const { owner, repo } = state.settings;
+      return `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/${path}`;
+    }
+
+    async function githubFetch(path, options = {}) {
+      if (!state.settings.token) {
+        openSettings();
+        throw new Error("请先填写 GitHub token。");
+      }
+
+      const response = await fetch(apiUrl(path), {
+        ...options,
+        headers: {
+          "Accept": "application/vnd.github+json",
+          "Authorization": `Bearer ${state.settings.token}`,
+          "X-GitHub-Api-Version": "2022-11-28",
+          ...(options.headers || {})
+        }
+      });
+      const text = await response.text();
+      const data = text ? JSON.parse(text) : null;
+      if (!response.ok) {
+        throw new Error(data && data.message ? data.message : `GitHub API ${response.status}`);
+      }
+      return data;
+    }
+
+    async function getFile(path) {
+      return githubFetch(`contents/${path}?ref=${encodeURIComponent(state.settings.branch)}`);
+    }
+
+    async function getFileMaybe(path) {
+      try {
+        return await getFile(path);
+      } catch (error) {
+        if (/not found/i.test(error.message)) return null;
+        throw error;
+      }
+    }
+
+    async function putFile(path, content, message, sha) {
+      const body = {
+        message,
+        content: encodeBase64Utf8(content),
+        branch: state.settings.branch
+      };
+      if (sha) body.sha = sha;
+      return githubFetch(`contents/${path}`, {
+        method: "PUT",
+        body: JSON.stringify(body)
+      });
     }
 
     function loadSettings() {
@@ -562,106 +816,37 @@
       $("settingsModal").setAttribute("aria-hidden", "true");
     }
 
-    function slugify(value) {
-      return value
-        .trim()
-        .toLowerCase()
-        .normalize("NFKD")
-        .replace(/[^\w\u4e00-\u9fa5]+/g, "-")
-        .replace(/^-+|-+$/g, "")
-        || "untitled";
-    }
-
-    function nowString() {
-      const d = new Date();
-      const pad = (n) => String(n).padStart(2, "0");
-      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-    }
-
-    function escapeYaml(value) {
-      return String(value).replace(/"/g, '\\"');
-    }
-
-    function splitList(value) {
-      return value
-        .split(/[,，]/)
-        .map((item) => item.trim())
-        .filter(Boolean);
-    }
-
-    function makeFrontMatter() {
-      const tags = splitList(fields.tags.value);
-      const category = fields.category.value.trim() || "随笔";
-      const tagLines = tags.length ? tags.map((tag) => `  - ${escapeYaml(tag)}`).join("\n") : "  - 写作";
-      return [
-        "---",
-        `title: "${escapeYaml(fields.title.value.trim() || "未命名文章")}"`,
-        `date: ${nowString()}`,
-        "categories:",
-        `  - ${escapeYaml(category)}`,
-        "tags:",
-        tagLines,
-        "---",
-        ""
-      ].join("\n");
-    }
-
-    function composeMarkdown() {
-      return makeFrontMatter() + fields.content.value.trim() + "\n";
-    }
-
-    function encodeBase64Utf8(value) {
-      const bytes = new TextEncoder().encode(value);
-      let binary = "";
-      const chunk = 0x8000;
-      for (let i = 0; i < bytes.length; i += chunk) {
-        binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
-      }
-      return btoa(binary);
-    }
-
-    function decodeBase64Utf8(value) {
-      const binary = atob(value.replace(/\n/g, ""));
-      const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
-      return new TextDecoder().decode(bytes);
-    }
-
-    function apiUrl(path) {
-      const { owner, repo } = state.settings;
-      return `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/${path}`;
-    }
-
-    async function githubFetch(path, options = {}) {
-      if (!state.settings.token) {
-        openSettings();
-        throw new Error("请先填写 GitHub token。");
-      }
-      const response = await fetch(apiUrl(path), {
-        ...options,
-        headers: {
-          "Accept": "application/vnd.github+json",
-          "Authorization": `Bearer ${state.settings.token}`,
-          "X-GitHub-Api-Version": "2022-11-28",
-          ...(options.headers || {})
-        }
+    function setMode(mode) {
+      state.mode = mode;
+      const config = modeConfig[mode];
+      document.querySelectorAll("[data-mode]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.mode === mode);
       });
-      const text = await response.text();
-      const data = text ? JSON.parse(text) : null;
-      if (!response.ok) {
-        throw new Error(data && data.message ? data.message : `GitHub API ${response.status}`);
-      }
-      return data;
+      $("pathHint").textContent = config.pathHint;
+      $("imageHint").textContent = config.imageHint;
+      $("categoryLabel").textContent = config.categoryLabel;
+      $("categoryOptions").innerHTML = config.categories.map((item) => `<option value="${escapeHtml(item)}"></option>`).join("");
+      fields.category.value = config.defaultCategory;
+      fields.cover.placeholder = config.defaultCover || "";
+      $("authorField").classList.toggle("hidden", mode !== "reading");
+      fields.syncCard.parentElement.classList.toggle("hidden", mode === "post");
+      newContent();
     }
 
     function saveDraft() {
       const draft = {
+        mode: state.mode,
         title: fields.title.value,
         slug: fields.slug.value,
         category: fields.category.value,
+        author: fields.author.value,
+        summary: fields.summary.value,
+        cover: fields.cover.value,
         tags: fields.tags.value,
         content: fields.content.value,
         editingPath: state.editingPath,
-        editingSha: state.editingSha
+        editingSha: state.editingSha,
+        lastImagePath: state.lastImagePath
       };
       localStorage.setItem(draftKey, JSON.stringify(draft));
       setStatus("草稿已保存在当前浏览器。", "success");
@@ -670,27 +855,474 @@
     function loadDraft() {
       const draft = JSON.parse(localStorage.getItem(draftKey) || "null");
       if (!draft) return;
+      setMode(draft.mode || "post");
       fields.title.value = draft.title || "";
       fields.slug.value = draft.slug || "";
-      fields.category.value = draft.category || "随笔";
+      fields.category.value = draft.category || modeConfig[state.mode].defaultCategory;
+      fields.author.value = draft.author || "";
+      fields.summary.value = draft.summary || "";
+      fields.cover.value = draft.cover || "";
       fields.tags.value = draft.tags || "";
       fields.content.value = draft.content || "";
       state.editingPath = draft.editingPath || "";
       state.editingSha = draft.editingSha || "";
+      state.lastImagePath = draft.lastImagePath || "";
       updatePreview();
     }
 
     function clearDraft() {
       localStorage.removeItem(draftKey);
-      fields.title.value = "";
-      fields.slug.value = "";
-      fields.category.value = "随笔";
-      fields.tags.value = "";
-      fields.content.value = "";
+      newContent();
+      setStatus("草稿已清空。");
+    }
+
+    function newContent() {
       state.editingPath = "";
       state.editingSha = "";
+      state.lastImagePath = "";
+      fields.title.value = "";
+      fields.slug.value = "";
+      fields.category.value = modeConfig[state.mode].defaultCategory;
+      fields.author.value = "";
+      fields.summary.value = "";
+      fields.cover.value = modeConfig[state.mode].defaultCover || "";
+      fields.tags.value = "";
+      fields.content.value = "";
+      if (state.mode !== "post") applyTemplate();
       updatePreview();
-      setStatus("草稿已清空。");
+      setStatus(`已新建${modeConfig[state.mode].label}草稿。`);
+    }
+
+    function projectTemplate() {
+      const title = escapeHtml(fields.title.value || "新的研究项目");
+      const summary = escapeHtml(fields.summary.value || "这里写项目概述和问题意识。");
+      return `<div class="detail-page">
+<header class="detail-header">
+<p class="detail-kicker">Research Project</p>
+<h1>${title}</h1>
+<p>${summary}</p>
+</header>
+<div class="detail-layout">
+<nav class="detail-toc" aria-label="项目目录">
+<strong>项目目录</strong>
+<a href="#overview">项目概述</a>
+<a href="#questions">研究问题</a>
+<a href="#data">数据与材料</a>
+<a href="#methods">方法与工具</a>
+<a href="#progress">阶段进展</a>
+<a href="#plans">后续计划</a>
+<a href="#notes">相关笔记</a>
+</nav>
+<main class="detail-content">
+<section id="overview">
+<h2>项目概述</h2>
+<p>${summary}</p>
+</section>
+<section id="questions">
+<h2>研究问题</h2>
+<ul>
+<li>这里写第一个研究问题。</li>
+<li>这里写第二个研究问题。</li>
+</ul>
+</section>
+<section id="data">
+<h2>数据与材料</h2>
+<p>这里记录政策文本、案例材料、数据表和相关文件链接。</p>
+</section>
+<section id="methods">
+<h2>方法与工具</h2>
+<p>这里记录研究方法、分析工具和可复现流程。</p>
+</section>
+<section id="progress">
+<h2>阶段进展</h2>
+<p>这里记录阶段日志、已经完成的工作和当前卡点。</p>
+</section>
+<section id="plans">
+<h2>后续计划</h2>
+<p>这里记录下一步计划。</p>
+</section>
+<section id="notes">
+<h2>相关笔记</h2>
+<p>这里链接相关博客、阅读笔记或文件。</p>
+</section>
+</main>
+</div>
+</div>`;
+    }
+
+    function readingTemplate() {
+      const title = escapeHtml(fields.title.value || "新的阅读笔记");
+      const author = escapeHtml(fields.author.value || "待补充作者");
+      const summary = escapeHtml(fields.summary.value || "这里写这条阅读笔记的简短说明。");
+      return `<div class="detail-page">
+<header class="detail-header">
+<p class="detail-kicker">Reading Note</p>
+<h1>${title}</h1>
+<p>${summary}</p>
+</header>
+<div class="detail-layout">
+<nav class="detail-toc" aria-label="阅读目录">
+<strong>阅读目录</strong>
+<a href="#info">文献信息</a>
+<a href="#questions">阅读问题</a>
+<a href="#chapters">章节目录</a>
+<a href="#arguments">核心观点</a>
+<a href="#concepts">关键概念</a>
+<a href="#excerpts">摘录与评论</a>
+<a href="#thinking">延伸思考</a>
+</nav>
+<main class="detail-content">
+<section id="info">
+<h2>文献信息</h2>
+<dl class="meta-list">
+<dt>标题</dt><dd>${title}</dd>
+<dt>作者</dt><dd>${author}</dd>
+<dt>类型</dt><dd>${escapeHtml(fields.category.value || "阅读笔记")}</dd>
+<dt>状态</dt><dd>待补充完整笔记</dd>
+</dl>
+</section>
+<section id="questions">
+<h2>阅读问题</h2>
+<p>这里写阅读前或阅读过程中最关心的问题。</p>
+</section>
+<section id="chapters">
+<h2>章节目录</h2>
+<ul>
+<li>第一章</li>
+<li>第二章</li>
+</ul>
+</section>
+<section id="arguments">
+<h2>核心观点</h2>
+<p>这里概括文献的核心论点。</p>
+</section>
+<section id="concepts">
+<h2>关键概念</h2>
+<p>这里记录概念、机制和重要变量。</p>
+</section>
+<section id="excerpts">
+<h2>摘录与评论</h2>
+<p>这里保存摘录和自己的评论。</p>
+</section>
+<section id="thinking">
+<h2>延伸思考</h2>
+<p>这里记录这篇文献如何启发自己的研究。</p>
+</section>
+</main>
+</div>
+</div>`;
+    }
+
+    function applyTemplate() {
+      if (state.mode === "project") fields.content.value = projectTemplate();
+      if (state.mode === "reading") fields.content.value = readingTemplate();
+      if (state.mode === "post" && !fields.content.value) {
+        fields.content.value = "这里开始写正文。";
+      }
+      updatePreview();
+      saveDraft();
+    }
+
+    function parseFrontMatter(markdown) {
+      const match = markdown.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+      if (!match) return { meta: {}, body: markdown };
+      const metaText = match[1];
+      const body = match[2];
+      const meta = {};
+
+      const readLine = (key) => {
+        const found = metaText.match(new RegExp(`^${key}:\\s*"?(.+?)"?$`, "m"));
+        return found ? found[1].replace(/\\"/g, '"') : "";
+      };
+
+      meta.title = readLine("title");
+      meta.summary = readLine("summary");
+      meta.cover = readLine("cover");
+      meta.author = readLine("author");
+      meta.project_type = readLine("project_type");
+      meta.reading_type = readLine("reading_type");
+      meta.category = readLine("category");
+
+      const category = metaText.match(/categories:\n\s*-\s*(.+)/);
+      if (category) meta.category = category[1].replace(/^"|"$/g, "");
+
+      const tags = metaText.match(/tags:\n([\s\S]*?)(?:\n[a-zA-Z_]+:|$)/);
+      if (tags) {
+        meta.tags = tags[1]
+          .split("\n")
+          .map((line) => line.replace(/^\s*-\s*/, "").trim())
+          .filter(Boolean)
+          .join(", ");
+      }
+
+      return { meta, body };
+    }
+
+    function composeContent() {
+      const tags = splitList(fields.tags.value);
+      const title = fields.title.value.trim() || "未命名";
+
+      if (state.mode === "post") {
+        const tagLines = tags.length ? tags.map((tag) => `  - ${escapeYaml(tag)}`).join("\n") : "  - 写作";
+        const lines = [
+          "---",
+          `title: "${escapeYaml(title)}"`,
+          `date: ${nowString()}`,
+          "categories:",
+          `  - ${escapeYaml(fields.category.value.trim() || "随笔")}`,
+          "tags:",
+          tagLines
+        ];
+        if (fields.cover.value.trim()) lines.push(`index_img: ${fields.cover.value.trim()}`);
+        lines.push("---", "");
+        return lines.join("\n") + fields.content.value.trim() + "\n";
+      }
+
+      const metaKey = state.mode === "project" ? "project_type" : "reading_type";
+      const tagLines = tags.length ? tags.map((tag) => `  - ${escapeYaml(tag)}`).join("\n") : "";
+      const lines = [
+        "---",
+        `title: ${title}`,
+        "layout: page",
+        `${metaKey}: ${fields.category.value.trim() || modeConfig[state.mode].defaultCategory}`
+      ];
+      if (state.mode === "reading" && fields.author.value.trim()) lines.push(`author: ${fields.author.value.trim()}`);
+      if (fields.summary.value.trim()) lines.push(`summary: "${escapeYaml(fields.summary.value.trim())}"`);
+      if (fields.cover.value.trim()) lines.push(`cover: ${fields.cover.value.trim()}`);
+      if (tagLines) lines.push("tags:", tagLines);
+      lines.push("---", "");
+      return lines.join("\n") + fields.content.value.trim() + "\n";
+    }
+
+    function currentPath() {
+      const title = fields.title.value.trim();
+      const slug = slugify(fields.slug.value || title);
+      fields.slug.value = slug;
+      if (state.mode === "post") return `source/_posts/${slug}.md`;
+      return `source/${state.mode === "project" ? "projects" : "reading"}/${slug}/index.md`;
+    }
+
+    async function loadList() {
+      try {
+        const config = modeConfig[state.mode];
+        setStatus(`正在读取${config.label}列表...`);
+        const data = await githubFetch(`contents/${config.listPath}?ref=${encodeURIComponent(state.settings.branch)}`);
+        const files = [];
+
+        if (state.mode === "post") {
+          data.filter((item) => item.type === "file" && item.name.endsWith(".md")).forEach((item) => files.push(item));
+        } else {
+          data.filter((item) => item.type === "dir").forEach((item) => {
+            files.push({ name: item.name, path: `${item.path}/index.md` });
+          });
+        }
+
+        const list = $("contentList");
+        list.innerHTML = "";
+        if (!files.length) list.innerHTML = '<div class="muted">还没有内容。</div>';
+        files.sort((a, b) => a.name.localeCompare(b.name)).forEach((file) => {
+          const button = document.createElement("button");
+          button.className = "content-item";
+          button.type = "button";
+          button.innerHTML = `<span>${escapeHtml(file.name)}</span><small>${escapeHtml(file.path)}</small>`;
+          button.addEventListener("click", () => loadItem(file.path));
+          list.appendChild(button);
+        });
+        setStatus(`已读取 ${files.length} 条${config.label}。`, "success");
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    }
+
+    async function loadItem(path) {
+      try {
+        setStatus("正在打开内容...");
+        const data = await getFile(path);
+        const markdown = decodeBase64Utf8(data.content);
+        const parsed = parseFrontMatter(markdown);
+        const name = path.split("/").slice(-1)[0];
+        const folder = path.split("/").slice(-2)[0];
+
+        fields.title.value = parsed.meta.title || (state.mode === "post" ? name.replace(/\.md$/, "") : folder);
+        fields.slug.value = state.mode === "post" ? name.replace(/\.md$/, "") : folder;
+        fields.category.value =
+          parsed.meta.project_type ||
+          parsed.meta.reading_type ||
+          parsed.meta.category ||
+          modeConfig[state.mode].defaultCategory;
+        fields.author.value = parsed.meta.author || "";
+        fields.summary.value = parsed.meta.summary || "";
+        fields.cover.value = parsed.meta.cover || (modeConfig[state.mode].defaultCover || "");
+        fields.tags.value = parsed.meta.tags || "";
+        fields.content.value = parsed.body.trim();
+        state.editingPath = path;
+        state.editingSha = data.sha;
+        updatePreview();
+        saveDraft();
+        setStatus(`正在编辑 ${path}`, "success");
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    }
+
+    function buildProjectCard(slug) {
+      const title = escapeHtml(fields.title.value.trim() || "未命名项目");
+      const category = escapeHtml(fields.category.value.trim() || "研究项目");
+      const summary = escapeHtml(fields.summary.value.trim() || "这里写项目的简短说明。");
+      const tags = splitList(fields.tags.value);
+      const cover = escapeHtml(fields.cover.value.trim() || "/img/projects/default-project.svg");
+      const tagText = escapeHtml(tags.join(" "));
+      const tagHtml = tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+      return `<article class="library-card project-card" data-category="${category}" data-tags="${tagText}" data-slug="${escapeHtml(slug)}">
+<a class="project-cover" href="/projects/${escapeHtml(slug)}/"><img src="${cover}" alt="${title}"></a>
+<div class="card-body">
+<p class="card-type">${category}</p>
+<h3><a href="/projects/${escapeHtml(slug)}/">${title}</a></h3>
+<p>${summary}</p>
+<div class="tag-list">${tagHtml}</div>
+<a class="card-action" href="/projects/${escapeHtml(slug)}/">进入项目</a>
+</div>
+</article>`;
+    }
+
+    function buildReadingCard(slug) {
+      const title = escapeHtml(fields.title.value.trim() || "未命名阅读笔记");
+      const category = escapeHtml(fields.category.value.trim() || "书籍");
+      const author = escapeHtml(fields.author.value.trim() || "待补充作者与题名");
+      const summary = escapeHtml(fields.summary.value.trim() || "这里写阅读笔记的简短说明。");
+      const tags = splitList(fields.tags.value);
+      const cover = escapeHtml(fields.cover.value.trim() || "/img/covers/default-book-cover.svg");
+      const tagText = escapeHtml(tags.join(" "));
+      const tagHtml = tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+      return `<article class="library-card reading-card" data-category="${category}" data-tags="${tagText}" data-slug="${escapeHtml(slug)}">
+<a class="book-cover" href="/reading/${escapeHtml(slug)}/"><img src="${cover}" alt="${title}"></a>
+<div class="card-body">
+<p class="card-type">${category}</p>
+<h3><a href="/reading/${escapeHtml(slug)}/">${title}</a></h3>
+<p class="card-meta">${author}</p>
+<p>${summary}</p>
+<div class="tag-list">${tagHtml}</div>
+</div>
+</article>`;
+    }
+
+    async function syncIndexCard(slug) {
+      if (state.mode === "post") return;
+      const config = modeConfig[state.mode];
+      const start = state.mode === "project" ? "<!-- PROJECT_CARDS_START -->" : "<!-- READING_CARDS_START -->";
+      const end = state.mode === "project" ? "<!-- PROJECT_CARDS_END -->" : "<!-- READING_CARDS_END -->";
+      const card = state.mode === "project" ? buildProjectCard(slug) : buildReadingCard(slug);
+      const file = await getFile(config.indexPath);
+      let markdown = decodeBase64Utf8(file.content);
+      const startIndex = markdown.indexOf(start);
+      const endIndex = markdown.indexOf(end);
+      if (startIndex < 0 || endIndex < 0 || endIndex < startIndex) {
+        throw new Error(`没有在 ${config.indexPath} 找到入口页卡片标记。`);
+      }
+
+      const before = markdown.slice(0, startIndex + start.length);
+      const segment = markdown.slice(startIndex + start.length, endIndex);
+      const after = markdown.slice(endIndex);
+      const className = state.mode === "project" ? "project-card" : "reading-card";
+      const pattern = new RegExp(`\\n?<article class="library-card ${className}"[^>]*data-slug="${escapeRegExp(slug)}"[\\s\\S]*?<\\/article>\\n?`);
+      const nextSegment = pattern.test(segment)
+        ? segment.replace(pattern, `\n${card}\n`)
+        : `${segment.trimEnd()}\n${card}\n`;
+      markdown = `${before}${nextSegment}${after}`;
+      await putFile(config.indexPath, markdown, `update ${state.mode} index: ${fields.title.value.trim()}`, file.sha);
+    }
+
+    async function publish() {
+      try {
+        const title = fields.title.value.trim();
+        if (!title) throw new Error("请先填写标题。");
+        const path = currentPath();
+        if (state.editingPath && state.editingPath !== path) {
+          throw new Error("正在编辑已有内容时暂不支持改文件名。请保持原文件名，或点击“新建”后另存为新条目。");
+        }
+
+        setStatus("正在保存到 GitHub...");
+        const existing = state.editingSha ? { sha: state.editingSha } : await getFileMaybe(path);
+        const content = composeContent();
+        const action = existing ? "update" : "add";
+        const result = await putFile(path, content, `${action} ${modeConfig[state.mode].label}: ${title}`, existing && existing.sha);
+        state.editingPath = path;
+        state.editingSha = result.content.sha;
+
+        if (state.mode !== "post" && fields.syncCard.checked) {
+          setStatus("内容已保存，正在同步入口页卡片...");
+          await syncIndexCard(fields.slug.value);
+        }
+
+        saveDraft();
+        setStatus("保存成功。GitHub Actions 会在稍后自动更新网站。", "success");
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    }
+
+    function readFileBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result).split(",")[1]);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadImage() {
+      try {
+        const file = $("imageFile").files[0];
+        if (!file) throw new Error("请先选择图片。");
+        const config = modeConfig[state.mode];
+        const name = safeFileName(file.name);
+        const path = `${config.imageDir}/${name}`;
+        const publicPath = `${config.imagePublic}/${name}`;
+        const content = await readFileBase64(file);
+        const existing = await getFileMaybe(path);
+
+        setStatus("正在上传图片...");
+        await githubFetch(`contents/${path}`, {
+          method: "PUT",
+          body: JSON.stringify({
+            message: `upload image: ${name}`,
+            content,
+            branch: state.settings.branch,
+            ...(existing ? { sha: existing.sha } : {})
+          })
+        });
+
+        state.lastImagePath = publicPath;
+        fields.cover.value = publicPath;
+        saveDraft();
+        setStatus(`图片已上传：${publicPath}`, "success");
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    }
+
+    function insertImage() {
+      const path = state.lastImagePath || fields.cover.value.trim();
+      if (!path) {
+        setStatus("请先上传图片，或填写图片路径。", "error");
+        return;
+      }
+      const alt = fields.title.value.trim() || "图片";
+      const snippet = state.mode === "post"
+        ? `\n![${alt}](${path})\n`
+        : `\n<p><img src="${path}" alt="${escapeHtml(alt)}"></p>\n`;
+      insertAtCursor(snippet);
+    }
+
+    function insertAtCursor(text) {
+      const textarea = fields.content;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      textarea.value = textarea.value.slice(0, start) + text + textarea.value.slice(end);
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = start + text.length;
+      updatePreview();
+      saveDraft();
     }
 
     function renderMarkdown(markdown) {
@@ -714,12 +1346,8 @@
 
       lines.forEach((line) => {
         if (line.startsWith("```")) {
-          if (inCode) {
-            flushCode();
-          } else {
-            inCode = true;
-            code = [];
-          }
+          if (inCode) flushCode();
+          else inCode = true;
           return;
         }
         if (inCode) {
@@ -737,17 +1365,14 @@
           .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
           .replace(/\*(.+?)\*/g, "<em>$1</em>")
           .replace(/`(.+?)`/g, "<code>$1</code>")
+          .replace(/!\[(.*?)\]\((.+?)\)/g, '<img src="$2" alt="$1">')
           .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
 
-        if (line.startsWith("### ")) {
-          html += `<h3>${inline.slice(4)}</h3>`;
-        } else if (line.startsWith("## ")) {
-          html += `<h2>${inline.slice(3)}</h2>`;
-        } else if (line.startsWith("# ")) {
-          html += `<h1>${inline.slice(2)}</h1>`;
-        } else if (line.startsWith("> ")) {
-          html += `<blockquote>${inline.slice(2)}</blockquote>`;
-        } else if (line.startsWith("- ")) {
+        if (line.startsWith("### ")) html += `<h3>${inline.slice(4)}</h3>`;
+        else if (line.startsWith("## ")) html += `<h2>${inline.slice(3)}</h2>`;
+        else if (line.startsWith("# ")) html += `<h1>${inline.slice(2)}</h1>`;
+        else if (line.startsWith("> ")) html += `<blockquote>${inline.slice(2)}</blockquote>`;
+        else if (line.startsWith("- ")) {
           if (!inList) {
             html += "<ul>";
             inList = true;
@@ -768,103 +1393,10 @@
     }
 
     function updatePreview() {
-      $("previewPanel").innerHTML = renderMarkdown(fields.content.value);
-    }
-
-    async function loadPosts() {
-      try {
-        setStatus("正在读取文章列表...");
-        const data = await githubFetch(`contents/source/_posts?ref=${encodeURIComponent(state.settings.branch)}`);
-        const files = Array.isArray(data) ? data.filter((item) => item.name.endsWith(".md")) : [];
-        const list = $("postList");
-        list.innerHTML = "";
-        if (!files.length) {
-          list.innerHTML = '<div class="muted">还没有文章。</div>';
-        }
-        files
-          .sort((a, b) => b.name.localeCompare(a.name))
-          .forEach((file) => {
-            const button = document.createElement("button");
-            button.className = "post-item";
-            button.type = "button";
-            button.innerHTML = `<span>${file.name}</span><small>${file.path}</small>`;
-            button.addEventListener("click", () => loadPost(file.path));
-            list.appendChild(button);
-          });
-        setStatus(`已读取 ${files.length} 篇文章。`, "success");
-      } catch (error) {
-        setStatus(error.message, "error");
-      }
-    }
-
-    function parseFrontMatter(markdown) {
-      const match = markdown.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
-      if (!match) return { meta: {}, body: markdown };
-      const metaText = match[1];
-      const body = match[2];
-      const meta = {};
-      const title = metaText.match(/^title:\s*"?(.+?)"?$/m);
-      const category = metaText.match(/categories:\n\s*-\s*(.+)/);
-      const tags = [...metaText.matchAll(/tags:\n([\s\S]*?)(?:\n[a-zA-Z_]+:|$)/g)][0];
-      meta.title = title ? title[1].replace(/\\"/g, '"') : "";
-      meta.category = category ? category[1].replace(/^"|"$/g, "") : "随笔";
-      if (tags) {
-        meta.tags = tags[1].split("\n").map((line) => line.replace(/^\s*-\s*/, "").trim()).filter(Boolean).join(", ");
-      }
-      return { meta, body };
-    }
-
-    async function loadPost(path) {
-      try {
-        setStatus("正在打开文章...");
-        const data = await githubFetch(`contents/${path}?ref=${encodeURIComponent(state.settings.branch)}`);
-        const markdown = decodeBase64Utf8(data.content);
-        const parsed = parseFrontMatter(markdown);
-        fields.title.value = parsed.meta.title || data.name.replace(/\.md$/, "");
-        fields.slug.value = data.name.replace(/\.md$/, "");
-        fields.category.value = parsed.meta.category || "随笔";
-        fields.tags.value = parsed.meta.tags || "";
-        fields.content.value = parsed.body.trim();
-        state.editingPath = path;
-        state.editingSha = data.sha;
-        updatePreview();
-        saveDraft();
-        setStatus(`正在编辑 ${data.name}`, "success");
-      } catch (error) {
-        setStatus(error.message, "error");
-      }
-    }
-
-    async function publish() {
-      try {
-        const title = fields.title.value.trim();
-        if (!title) throw new Error("请先填写标题。");
-        const slug = slugify(fields.slug.value || title);
-        fields.slug.value = slug;
-        const path = state.editingPath || `source/_posts/${slug}.md`;
-        const markdown = composeMarkdown();
-        const body = {
-          message: state.editingSha ? `update post: ${title}` : `add post: ${title}`,
-          content: encodeBase64Utf8(markdown),
-          branch: state.settings.branch
-        };
-        if (state.editingSha) body.sha = state.editingSha;
-
-        setStatus("正在发布到 GitHub...");
-        const data = await githubFetch(`contents/${path}`, {
-          method: "PUT",
-          body: JSON.stringify(body)
-        });
-        state.editingPath = path;
-        state.editingSha = data.content.sha;
-        saveDraft();
-        setStatus("发布成功。GitHub Actions 会在稍后自动更新网站。", "success");
-      } catch (error) {
-        if (/already exists/i.test(error.message) && !state.editingSha) {
-          setStatus("同名文件已经存在。请换一个文件名，或先从文章列表打开原文再更新。", "error");
-        } else {
-          setStatus(error.message, "error");
-        }
+      if (state.mode === "post") {
+        $("previewPanel").innerHTML = renderMarkdown(fields.content.value);
+      } else {
+        $("previewPanel").innerHTML = fields.content.value || "<p>预览会显示在这里。</p>";
       }
     }
 
@@ -896,16 +1428,26 @@
     $("settingsButton").addEventListener("click", openSettings);
     $("closeSettingsButton").addEventListener("click", closeSettings);
     $("saveSettingsButton").addEventListener("click", saveSettings);
+    $("newButton").addEventListener("click", newContent);
+    $("templateButton").addEventListener("click", applyTemplate);
+    $("loadListButton").addEventListener("click", loadList);
     $("saveDraftButton").addEventListener("click", saveDraft);
     $("clearDraftButton").addEventListener("click", clearDraft);
     $("publishButton").addEventListener("click", publish);
-    $("loadPostsButton").addEventListener("click", loadPosts);
+    $("uploadImageButton").addEventListener("click", uploadImage);
+    $("insertImageButton").addEventListener("click", insertImage);
+
+    document.querySelectorAll("[data-mode]").forEach((button) => {
+      button.addEventListener("click", () => setMode(button.dataset.mode));
+    });
 
     fields.title.addEventListener("input", () => {
       if (!fields.slug.value || !state.editingPath) fields.slug.value = slugify(fields.title.value);
+      if (state.mode !== "post" && !fields.content.value.trim()) applyTemplate();
       saveDraft();
     });
-    ["slug", "category", "tags", "content"].forEach((id) => {
+
+    ["slug", "category", "author", "summary", "cover", "tags", "content"].forEach((id) => {
       fields[id].addEventListener("input", () => {
         updatePreview();
         saveDraft();
@@ -925,11 +1467,13 @@
     document.querySelectorAll("[data-wrap]").forEach((button) => {
       button.addEventListener("click", () => wrapSelection(button.dataset.wrap));
     });
+
     document.querySelectorAll("[data-prefix]").forEach((button) => {
       button.addEventListener("click", () => prefixSelection(button.dataset.prefix));
     });
 
     loadSettings();
+    setMode("post");
     loadDraft();
     updatePreview();
   </script>
