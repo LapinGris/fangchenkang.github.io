@@ -18,11 +18,23 @@ layout: page
 <div class="profile-contact">
   <a class="profile-email" href="mailto:kangfangchen@sjtu.edu.cn">kangfangchen@sjtu.edu.cn</a>
 
-  <a class="profile-xhs" href="https://www.xiaohongshu.com/user/profile/5f23ac3f0000000001003761" target="_blank" rel="noopener noreferrer" aria-label="小红书">
-    <img src="../img/xiaohongshu.png" alt="小红书">
-  </a>
+  <div class="profile-social-row">
+    <a class="profile-xhs social-icon-link" href="https://www.xiaohongshu.com/user/profile/5f23ac3f0000000001003761" target="_blank" rel="noopener noreferrer" aria-label="小红书">
+      <img src="/img/xiaohongshu.svg" alt="小红书">
+    </a>
+
+<div class="profile-wechat social-icon-link">
+      <img class="wechat-icon-img" src="/img/wechat.svg" alt="微信公众号">
+      <div class="wechat-qrcode">
+        <img src="/img/wechat-qr.jpg" alt="微信公众号二维码">
+        <p>扫码关注微信公众号</p>
+      </div>
+    </div>
+  </div>
 </div>
 </aside>
+
+
 
 <main class="academic-main">
 <section>
@@ -176,9 +188,23 @@ layout: page
 <section>
 <p class="section-kicker">Contact</p>
 <h2>联系方式</h2>
-<p>邮箱：<a href="mailto:kangfangchen@sjtu.edu.cn">kangfangchen@sjtu.edu.cn</a></p>
-<div class="profile-social">
-  <a href="https://www.xiaohongshu.com/user/profile/5f23ac3f0000000001003761" target="_blank" rel="noopener noreferrer" aria-label="小红书">小红书</a>
+
+<div class="contact-card">
+  <p class="contact-email-line">
+    邮箱：<a href="mailto:kangfangchen@sjtu.edu.cn">kangfangchen@sjtu.edu.cn</a>
+  </p>
+
+  <div class="contact-social">
+    <a class="contact-xhs" href="https://www.xiaohongshu.com/user/profile/5f23ac3f0000000001003761" target="_blank" rel="noopener noreferrer">小红书</a>
+
+ <span class="contact-wechat">
+      微信公众号
+      <span class="contact-wechat-panel">
+        <img src="/img/wechat-qr.jpg" alt="微信公众号二维码">
+        <span>扫码关注微信公众号</span>
+      </span>
+    </span>
+  </div>
 </div>
 </section>
 </main>

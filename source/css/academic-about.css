@@ -29,6 +29,7 @@
   font-weight: 700;
   box-shadow: 0 18px 38px rgba(47, 65, 84, 0.12);
 }
+
 .profile-photo-wrap {
   width: 220px;
   height: 220px;
@@ -49,6 +50,7 @@
   object-position: center 40%;
   display: block;
 }
+
 .academic-profile h1 {
   margin: 0;
   color: #1f2937;
@@ -96,6 +98,7 @@
   text-decoration: none;
   background: #fff;
 }
+
 .profile-contact {
   margin-top: 1.4rem;
   display: flex;
@@ -118,40 +121,92 @@
   border-bottom-color: #263445;
 }
 
-.profile-xhs {
+.profile-social-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+}
+
+.social-icon-link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 0.45rem;
+  border-bottom: 2px solid rgba(95, 111, 130, 0.25);
   text-decoration: none;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  line-height: 1;
+  transition: transform 0.2s ease, opacity 0.2s ease, border-bottom-color 0.2s ease;
 }
 
 .profile-xhs img {
-  height: 34px;
+  height: 28px;
   width: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+.profile-wechat {
+  position: relative;
+}
+
+.wechat-icon-img {
+  width: 28px;
+  height: 28px;
+  display: block;
+  opacity: 0.9;
+  cursor: default;
+}
+
+.profile-xhs:hover,
+.profile-wechat:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+  border-bottom-color: rgba(95, 111, 130, 0.55);
+}
+
+.wechat-qrcode {
+  position: absolute;
+  left: 50%;
+  bottom: 46px;
+  transform: translateX(-50%) translateY(8px);
+  width: 210px;
+  padding: 14px 14px 10px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 45px rgba(38, 52, 69, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 20;
+}
+
+.wechat-qrcode img {
+  width: 100%;
+  height: auto;
   display: block;
   border-radius: 10px;
 }
 
-.profile-xhs:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
+.wechat-qrcode p {
+  margin: 0.55rem 0 0;
+  font-size: 0.78rem;
+  color: #6b7788;
+  text-align: center;
 }
 
-.profile-contact a {
-  color: #5f6f82;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(95, 111, 130, 0.35);
-  padding-bottom: 2px;
+.profile-wechat:hover .wechat-qrcode {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }
 
-.profile-contact a:hover {
-  color: #263445;
-  border-bottom-color: #263445;
-}
 .academic-main {
   min-width: 0;
 }
+
 .publication-list {
   margin-top: 1rem;
 }
@@ -168,6 +223,7 @@
   margin: 0;
   line-height: 1.8;
 }
+
 .academic-main section {
   padding: 0 0 30px;
   margin: 0 0 30px;
@@ -255,6 +311,107 @@
   line-height: 1.75;
 }
 
+.contact-card {
+  margin-top: 0.4rem;
+}
+
+.contact-email-line {
+  margin: 0 0 0.9rem;
+  color: #3c4858;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.contact-email-line a {
+  color: #5f6f82;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(95, 111, 130, 0.35);
+  padding-bottom: 2px;
+}
+
+.contact-email-line a:hover {
+  color: #263445;
+  border-bottom-color: #263445;
+}
+
+.contact-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 0.2rem;
+}
+
+.contact-social > a,
+.contact-social > .contact-wechat {
+  position: relative;
+  display: inline-block;
+  color: #5f6f82;
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 1.6;
+  border-bottom: 1px solid rgba(95, 111, 130, 0.35);
+  padding-bottom: 2px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-bottom-color 0.2s ease;
+}
+
+.contact-xhs:hover {
+  color: #ff2442;
+  border-bottom-color: #ff2442;
+}
+
+.contact-wechat:hover {
+  color: #07c160;
+  border-bottom-color: #07c160;
+}
+
+.contact-wechat-panel,
+.contact-wechat-qrcode {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 12px);
+  transform: translateX(-50%) translateY(8px);
+  width: 210px;
+  padding: 14px 14px 10px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 45px rgba(38, 52, 69, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 50;
+  border-bottom: 0;
+}
+
+.contact-wechat-panel img,
+.contact-wechat-qrcode img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+.contact-wechat-panel span,
+.contact-wechat-qrcode span {
+  display: block;
+  margin-top: 0.55rem;
+  color: #6b7788;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  text-align: center;
+  border-bottom: 0;
+  padding-bottom: 0;
+  cursor: default;
+}
+
+.contact-wechat:hover .contact-wechat-panel,
+.contact-wechat:hover .contact-wechat-qrcode {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
 @media (max-width: 900px) {
   .academic-about {
     grid-template-columns: 1fr;
@@ -279,6 +436,11 @@
     font-size: 58px;
   }
 
+  .profile-photo-wrap {
+    width: 180px;
+    height: 180px;
+  }
+
   .academic-profile h1 {
     font-size: 26px;
   }
@@ -294,6 +456,11 @@
   .timeline-item {
     grid-template-columns: 1fr;
     gap: 4px;
+  }
+
+  .contact-social {
+    display: flex;
+    flex-wrap: wrap;
   }
 }
 
@@ -327,6 +494,20 @@ html[data-user-color-scheme='dark'] .profile-links a {
   border-color: #3b4656;
   color: #d9e4f0;
 }
+
+html[data-user-color-scheme='dark'] .wechat-qrcode,
+html[data-user-color-scheme='dark'] .contact-wechat-panel,
+html[data-user-color-scheme='dark'] .contact-wechat-qrcode {
+  background: #1f2937;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+html[data-user-color-scheme='dark'] .wechat-qrcode p,
+html[data-user-color-scheme='dark'] .contact-wechat-panel span,
+html[data-user-color-scheme='dark'] .contact-wechat-qrcode span {
+  color: #b8c4d2;
+}
+
 .profile-social {
   display: flex;
   justify-content: center;
