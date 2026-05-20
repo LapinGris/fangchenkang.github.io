@@ -1,3 +1,3 @@
-# Reserved for optional deployment overrides.
-# User or organization sites use the root path by default.
-root: /
+# Overrides used by the GitHub Pages workflow for this project repository.
+# Current repository is published as https://lapingris.github.io/fangchenkang.github.io/
+root: /fangchenkang.github.io/

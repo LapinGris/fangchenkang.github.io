@@ -15,8 +15,8 @@ language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
-# For a GitHub Pages user or organization site.
-url: https://fangchenkang.github.io
+# For local preview and the current GitHub Pages project site.
+url: https://lapingris.github.io/fangchenkang.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:

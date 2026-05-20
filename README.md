@@ -53,7 +53,7 @@ tags:
 
 ## GitHub Pages 部署
 
-仓库所有者应为 `fangchenkang`，仓库名应为 `fangchenkang.github.io`。这是 GitHub Pages 用户或组织主页仓库的命名方式，因此发布后的地址是 `https://fangchenkang.github.io/`。本项目提供 GitHub Actions 工作流，通过 Actions 构建 Hexo 并发布 `public/` 到 GitHub Pages。
+当前仓库发布在 `LapinGris` 账号下，仓库名为 `fangchenkang.github.io`，因此 GitHub Pages 地址是 `https://lapingris.github.io/fangchenkang.github.io/`。本项目提供 GitHub Actions 工作流，通过 Actions 构建 Hexo 并发布 `public/` 到 GitHub Pages。
 
 启用方式：
 
@@ -61,13 +61,13 @@ tags:
 2. 在仓库 `Settings -> Pages` 中，将 `Build and deployment` 的 `Source` 设为 `GitHub Actions`。
 3. 推送到 `main` 分支后，`.github/workflows/pages.yml` 会执行构建与发布。
 
-GitHub Pages 用户或组织主页通常部署在 `https://fangchenkang.github.io/`，因此站点根路径保持为 `/`。
+当前是 GitHub Pages 项目站点，发布路径是 `/fangchenkang.github.io/`，因此 Actions 构建时会额外读取 `_config.github.yml`。
 
 ## Vercel 部署
 
 也可以使用 Vercel：
 
-- Import Project：导入 `https://github.com/fangchenkang/fangchenkang.github.io`
+- Import Project：导入 `https://github.com/LapinGris/fangchenkang.github.io`
 - Install Command：`npm install`
 - Build Command：`npx hexo generate`
 - Output Directory：`public`
